@@ -10,8 +10,10 @@ namespace Lab1.Models
 
         [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Incorrect number")]
         [Display(Name = "Number")]
-        public string Name { get; set; }
+        [Required(ErrorMessage = "Field is required")]
+        public string Number { get; set; }
 
+        [Range(0, Int32.MaxValue, ErrorMessage = "Incorrect value!")]
         [Required(ErrorMessage = "Field is required")]
         public decimal Sum { get; set; }
 
@@ -21,8 +23,6 @@ namespace Lab1.Models
         public DateTime StartDate { get; set; }
 
         public int DaysLeft { get; set; }
-
-        public int StartSum { get; set; }
 
         [Display(Name = "Client")]
         public int ClientId { get; set; }

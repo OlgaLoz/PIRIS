@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Balance";
+    Layout = "~/Views/Shared/_BankomatLayout.cshtml";
+}
+
+@model int
+
+<div class="custom-container text-center">
+    <div class="panel panel-info">
+        <div class="panel-heading">Current balance</div>
+        <div class="panel-body">@Model</div>
+    </div>
+    @Html.Partial("_AfterOperationMenu")
+</div>
+

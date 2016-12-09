@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_BankomatLayout.cshtml";
+}
+
+<div class="custom-container text-center">
+    <div class="btn-group-vertical">
+        @Html.ActionLink("Get money", "GetMoney", null, new { @class = "btn btn-default btn-lg" })
+        @Html.ActionLink("Get balance", "Balance", null, new { @class = "btn btn-default btn-lg" })
+        @Html.ActionLink("Get deposite balance", "Index", null, new { @class = "btn btn-default btn-lg" })
+        @Html.ActionLink("Do payment", "Index", null, new { @class = "btn btn-default btn-lg" })
+        @Html.ActionLink("Get card back", "GetCardBack", null, new { @class = "btn btn-default btn-lg" })
+    </div>
+</div>
+

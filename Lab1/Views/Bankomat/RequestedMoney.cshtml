@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "RequestedMoney";
+    Layout = "~/Views/Shared/_BankomatLayout.cshtml";
+}
+
+@model Lab1.Models.ViewModels.RequestedMoney
+
+<div class="custom-container">
+    <div class="panel panel-info">
+        <div class="panel-heading">How much money do you want?</div>
+        <div class="panel-body">
+            @using (Html.BeginForm("GetMoney", "Bankomat", FormMethod.Post))
+            {
+                <div class="form-horizontal col-lg-offset-2 col-lg-10">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Money, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Money, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                            @Html.ValidationMessageFor(model => model.Money, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                  
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            <input type="submit" value="Get money" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

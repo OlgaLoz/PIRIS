@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Lab1.Models.ClientDepositCredit>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Client.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepositCredit.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MainAccount.AccountNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PersentAccount.AccountNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Client.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepositCredit.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MainAccount.AccountNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PersentAccount.AccountNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ClientDepositCreditId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ClientDepositCreditId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ClientDepositCreditId })
+        </td>
+    </tr>
+}
+
+</table>

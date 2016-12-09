@@ -22,6 +22,8 @@ namespace Lab1.Models
 
         public int DaysLeft { get; set; }
 
+        public int StartSum { get; set; }
+
         [Display(Name = "Client")]
         public int ClientId { get; set; }
 

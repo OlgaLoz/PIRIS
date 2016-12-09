@@ -103,12 +103,13 @@ namespace Lab1.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (
-                    db.Set<Client>()
-                        .Any(
-                            c =>
-                                c.PassportNumber.Equals(client.PassportNumber) ||
-                                c.PassrortIdNumber.Equals(client.PassrortIdNumber)))
+                bool isPassportDataExist = db.Set<Client>().Where(c =>
+                        c.PassportNumber.Equals(client.PassportNumber) ||
+                        c.PassrortIdNumber.Equals(client.PassrortIdNumber))
+                    
+                    .Any(c => c.Id != client.Id);
+
+                if (isPassportDataExist)
                 {
                     ModelState.AddModelError("", "Such client exists!");
                 }

@@ -8,9 +8,9 @@ namespace Lab1.Models
     {
         public int ClientDepositCreditId { get; set; }
 
+        [Required(ErrorMessage = "Field is required")]
         [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Incorrect number")]
         [Display(Name = "Number")]
-        [Required(ErrorMessage = "Field is required")]
         public string Number { get; set; }
 
         [Range(0, Int32.MaxValue, ErrorMessage = "Incorrect value!")]

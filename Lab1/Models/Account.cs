@@ -29,5 +29,7 @@ namespace Lab1.Models
         public Client Client { get; set; }
         
         public List<ClientCard> ClientCards { get; set; } = new List<ClientCard>();
+
+        public List<AccountOperation> AccountOperations { get; set; } = new List<AccountOperation>();
     }
 }

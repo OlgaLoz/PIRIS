@@ -10,7 +10,60 @@ namespace Lab1.Controllers
     {
         private readonly UserContext db = new UserContext();
 
-        // GET: Deposit/Create
+        [HttpGet]
+        public ActionResult CreateCredit(int id)
+        {
+            var deposit = new ClientDepositCredit { ClientId = id };
+            ViewBag.DepositCreditId = new SelectList(db.DepositCredits, "DepositCreditId", "Name");
+            return View(deposit);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCredit([Bind(Include = "ClientDepositCreditId,Number,Sum,StartDate,ClientId,DepositCreditId,MainAccountId,PersentAccountId")] ClientDepositCredit clientDepositCredit)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var credit =
+                    db.DepositCredits.FirstOrDefault(x => x.DepositCreditId == clientDepositCredit.DepositCreditId);
+                var mainAccount = new Account
+                {
+                    AccountNumber = "9999" + Guid.NewGuid().ToString().Substring(0, 9),
+                    AccountCodeId = 2,
+                    Sum = clientDepositCredit.Sum,
+                    CurrencyId = credit.CurrencyId,
+                    AccountActivity = AccountActivity.Active,
+                    AccountTypeId = 2,
+                    ClientId = clientDepositCredit.ClientId
+                };
+
+                var persentAccount = new Account
+                {
+                    AccountNumber = "9999" + Guid.NewGuid().ToString().Substring(0, 9),
+                    AccountCodeId = 2,
+                    CurrencyId = credit.CurrencyId,
+                    AccountActivity = AccountActivity.Active,
+                    AccountTypeId = 3,
+                    ClientId = clientDepositCredit.ClientId
+                };
+
+                clientDepositCredit.MainAccount = mainAccount;
+                clientDepositCredit.PersentAccount = persentAccount;
+                clientDepositCredit.DaysLeft = credit.DaysCount;
+                clientDepositCredit.StartDate = DateTime.Now;
+
+                db.ClientDepositCredits.Add(clientDepositCredit);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.DepositCreditId = new SelectList(db.DepositCredits, "DepositCreditId", "Name", clientDepositCredit.DepositCreditId);
+            return View(clientDepositCredit);
+        }
+
+        [HttpGet]
         public ActionResult CreateDeposit(int id)
         {
             var deposit = new ClientDepositCredit {ClientId = id};

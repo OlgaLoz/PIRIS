@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Lab1.Infrastucture;
@@ -62,6 +63,32 @@ namespace Lab1.Controllers
                 clientDepositCredit.DaysLeft = credit.DaysCount;
                 clientDepositCredit.StartDate = DateTime.Now;
 
+
+                var bdf = db.Accounts.FirstOrDefault();
+                var exchangeRate = db.ExchangeRates.FirstOrDefault(x => x.StartCurrencyId == clientDepositCredit.DepositCredit.CurrencyId
+                  && x.FinishCurrencyId == bdf.CurrencyId);
+
+               
+                bdf.Sum -= clientDepositCredit.Sum * exchangeRate.Rate;
+
+                bdf.AccountOperations.Add(new AccountOperation
+                {
+                    OperationType = "Debit",
+                    Sum = clientDepositCredit.Sum,
+                    OperationDate = DateTime.Now,
+                });
+
+                mainAccount.AccountOperations.Add(new AccountOperation
+                {
+                    OperationType = "Debit",
+                    Sum = clientDepositCredit.Sum,
+                    OperationDate = DateTime.Now,
+                });
+
+
+                db.Entry(bdf).State = EntityState.Modified;
+                db.SaveChanges();
+
                 db.ClientDepositCredits.Add(clientDepositCredit);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
@@ -114,6 +141,31 @@ namespace Lab1.Controllers
                 clientDepositCredit.PersentAccount = persentAccount;
                 clientDepositCredit.DaysLeft = deposit.DaysCount;
                 clientDepositCredit.StartDate = DateTime.Now;
+
+                var bdf = db.Accounts.FirstOrDefault();
+                var exchangeRate = db.ExchangeRates.FirstOrDefault(x => x.StartCurrencyId == clientDepositCredit.DepositCredit.CurrencyId
+                  && x.FinishCurrencyId == bdf.CurrencyId);
+
+
+                bdf.Sum += clientDepositCredit.Sum * exchangeRate.Rate;
+
+                bdf.AccountOperations.Add(new AccountOperation
+                {
+                    OperationType = "Credit",
+                    Sum = clientDepositCredit.Sum,
+                    OperationDate = DateTime.Now,
+                });
+
+                mainAccount.AccountOperations.Add(new AccountOperation
+                {
+                    OperationType = "Debit",
+                    Sum = clientDepositCredit.Sum,
+                    OperationDate = DateTime.Now,
+                });
+
+
+                db.Entry(bdf).State = EntityState.Modified;
+                db.SaveChanges();
 
                 db.ClientDepositCredits.Add(clientDepositCredit);
                 db.SaveChanges();

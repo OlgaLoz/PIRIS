@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Lab1.Infrastucture;
 using Lab1.Models;
 using Lab1.Models.ViewModels;
@@ -18,6 +20,14 @@ namespace Lab1.Controllers
             return View(new Card());
         }
 
+        [HttpGet]
+        public ActionResult ContinueWork()
+        {
+            var tmp = currentCard;
+            tmp = currentCard;
+            return View("Index", tmp);
+        }
+
         [HttpPost]
         public ActionResult Index(Card card)
         {
@@ -33,7 +43,7 @@ namespace Lab1.Controllers
                     if (card.AttemptionsCount == 1)
                     {
                         ModelState.AddModelError("", "Your card will be blocked! You have the last attemption!");
-                        card = new Card();
+                        card = new Card {CardNumber = ""};
                     }
                     else if (cardFromDb.PinCode != card.PinCode)
                     {
@@ -57,11 +67,6 @@ namespace Lab1.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult AfterOperationMenu()
-        {
-            return View();
-        }
 
         [HttpGet]
         public ActionResult GetMoney()
@@ -81,10 +86,22 @@ namespace Lab1.Controllers
             {
                 return View("Index", new Card());
             }
+            var card = _db.ClientCards.FirstOrDefault();
+            var account = card?.Account;
+            var balance = account.Sum;
+            if (model.Money > balance)
+            {
+                ModelState.AddModelError("", "There is no so much monet!");
+            }
+
             if (ModelState.IsValid)
             {
                 //Decrease balance in db, check balance
-                currentCard = null;
+                account.Sum = account.Sum - (decimal)model.Money;
+                
+                _db.Entry(account).State = EntityState.Modified;
+                _db.SaveChanges();
+
                 return View("GetMoneySuccessMessage");
             }
           
@@ -99,16 +116,17 @@ namespace Lab1.Controllers
                 return View("Index", new Card());
             }
             //Get balance from db
-            currentCard = null;
-            return View(1);
+            var balance = _db.ClientCards.FirstOrDefault()?.Account?.Sum;
+           
+            return View(balance.Value);
         }
 
         [HttpGet]
         public ActionResult GetCardBack()
         {
-            return View("Index", new Card());
+            currentCard = null;
+            return View("Index", new Card {PinCode = 0});
         }
-
 
     }
 }

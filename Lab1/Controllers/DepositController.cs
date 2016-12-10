@@ -3,12 +3,20 @@ using System.Linq;
 using System.Web.Mvc;
 using Lab1.Infrastucture;
 using Lab1.Models;
+using Lab1.Services;
 
 namespace Lab1.Controllers
 {
     public class DepositController : Controller
     {
         private readonly UserContext db = new UserContext();
+        private readonly BankService bankService = new BankService();
+
+        public ActionResult CloseBankDay()
+        {
+            bankService.CloseBankDay();
+            return View(db.AccountOperations.ToList());
+        }
 
         [HttpGet]
         public ActionResult CreateCredit(int id)

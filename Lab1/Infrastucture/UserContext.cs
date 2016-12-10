@@ -51,6 +51,8 @@ namespace Lab1.Infrastucture
             .HasRequired(x => x.StartCurrency)
             .WithMany()
             .WillCascadeOnDelete(false);
+
+            modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(18, 6));
         }
     }
 }

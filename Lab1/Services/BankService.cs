@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Lab1.Infrastucture;
 using Lab1.Models;
 
@@ -173,12 +171,74 @@ namespace Lab1.Services
 
         private void CountAnnuityPaymentCredit(ClientDepositCredit clientDepositCredit, Account fund)
         {
+            if (clientDepositCredit.DaysLeft == 0)
+            {
+                return;
+            }
+
+            clientDepositCredit.DaysLeft -= 1;
+
+            var mainAccount = clientDepositCredit.MainAccount;
+            var persentAccount = clientDepositCredit.PersentAccount;
+
+            var sumAdded = clientDepositCredit.Sum * (clientDepositCredit.DepositCredit.PerSent / (100 * 365));
             
+            var exchangeRate =
+                db.ExchangeRates.FirstOrDefault(x => x.StartCurrencyId == clientDepositCredit.DepositCredit.CurrencyId
+                && x.FinishCurrencyId == fund.CurrencyId);
+
+            persentAccount.Sum += sumAdded;
+            fund.Sum += exchangeRate.Rate * sumAdded;
+
+            persentAccount.AccountOperations.Add(new AccountOperation
+            {
+                OperationType = "Credit",
+                Sum = sumAdded,
+                OperationDate = DateTime.Now,
+            });
+
+            fund.AccountOperations.Add(new AccountOperation
+            {
+                OperationType = "Credit",
+                Sum = sumAdded,
+                OperationDate = DateTime.Now,
+            });
         }
 
         private void CountDifferentialPaymentCredit(ClientDepositCredit clientDepositCredit, Account fund)
         {
-            
+            if (clientDepositCredit.DaysLeft == 0)
+            {
+                return;
+            }
+
+            clientDepositCredit.DaysLeft -= 1;
+
+            var mainAccount = clientDepositCredit.MainAccount;
+            var persentAccount = clientDepositCredit.PersentAccount;
+
+            var sumAdded = (mainAccount.Sum + persentAccount.Sum)*(clientDepositCredit.DepositCredit.PerSent/(100*365));
+
+            var exchangeRate =
+                db.ExchangeRates.FirstOrDefault(x => x.StartCurrencyId == clientDepositCredit.DepositCredit.CurrencyId
+                && x.FinishCurrencyId == fund.CurrencyId);
+
+            persentAccount.Sum += sumAdded;
+            fund.Sum += exchangeRate.Rate * sumAdded;
+
+            persentAccount.AccountOperations.Add(new AccountOperation
+            {
+                OperationType = "Credit",
+                Sum = sumAdded,
+                OperationDate = DateTime.Now,
+            });
+
+            fund.AccountOperations.Add(new AccountOperation
+            {
+                OperationType = "Credit",
+                Sum = sumAdded,
+                OperationDate = DateTime.Now,
+            });
         }
     }
 }

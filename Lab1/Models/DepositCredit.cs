@@ -25,7 +25,7 @@ namespace Lab1.Models
         [Display(Name = "Currency")]
         public int CurrencyId { get; set; }
 
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
     }
 }
  

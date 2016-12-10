@@ -27,20 +27,20 @@ namespace Lab1.Models
         [Display(Name = "Client")]
         public int ClientId { get; set; }
 
-        public Client Client { get; set; }
+        public virtual Client Client { get; set; }
 
         public int DepositCreditId { get; set; }
 
-        public DepositCredit DepositCredit { get; set; }
+        public virtual DepositCredit DepositCredit { get; set; }
 
         [ForeignKey("MainAccount")]
         public int MainAccountId { get; set; }
 
-        public Account MainAccount { get; set; }
+        public virtual Account MainAccount { get; set; }
 
         [ForeignKey("PersentAccount")]
         public int PersentAccountId { get; set; }
 
-        public Account PersentAccount { get; set; }
+        public virtual Account PersentAccount { get; set; }
     }
 }

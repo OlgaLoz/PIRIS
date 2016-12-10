@@ -33,6 +33,8 @@ namespace Lab1.Infrastucture
 
         public DbSet<Town> Towns { get; set; }
 
+        public DbSet<AccountOperation> AccountOperations { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ClientDepositCredit>()
@@ -49,33 +51,6 @@ namespace Lab1.Infrastucture
             .HasRequired(x => x.StartCurrency)
             .WithMany()
             .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Currency>()
-
-            /*modelBuilder.Entity<ExchangeRate>()
-                .Has()
-                .WithRequired()
-                .HasForeignKey(x => x.StartCurrencyId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ExchangeRate>()
-                .HasRequired(x => x.FinishCurrency)
-                .WithMany()
-                .HasForeignKey(x => x.FinishCurrencyId)
-                .WillCascadeOnDelete(false);*/
-
-            /*modelBuilder.Entity<ClientDepositCredit>()
-                .HasRequired(x => x.MainAccount)
-                .WithMany()
-                .HasForeignKey(x => x.MainAccountId)
-                .WillCascadeOnDelete(false);//.WithRequiredPrincipal(x => x.AccountId)*/
-
-            /*modelBuilder.Entity<ClientDepositCredit>().HasRequired(x => x.MainAccount).WithRequiredPrincipal()
-                .WillCascadeOnDelete(false);*/
-            /*modelBuilder.Entity<Student>().HasRequired(m => m.BirthCity)
-               .WithMany(m => m.BirthCityStudents).HasForeignKey(m => m.BirthCityId);
-            modelBuilder.Entity<Student>().HasRequired(m => m.LivingCity)
-                      .WithMany(m => m.LivingCityStudents).HasForeignKey(m => m.LivingCityId);*/
         }
     }
 }

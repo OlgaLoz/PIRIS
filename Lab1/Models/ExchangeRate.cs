@@ -11,11 +11,11 @@ namespace Lab1.Models
         [ForeignKey("StartCurrency")]
         public int StartCurrencyId { get; set; }
 
-        public Currency StartCurrency { get; set; }
+        public virtual Currency StartCurrency { get; set; }
 
         [ForeignKey("FinishCurrency")]
         public int FinishCurrencyId { get; set; }
 
-        public Currency FinishCurrency { get; set; }
+        public virtual Currency FinishCurrency { get; set; }
     }
 }

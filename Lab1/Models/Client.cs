@@ -82,28 +82,28 @@ namespace Lab1.Models
         [Display(Name = "* Family status")]
         public int FamilyStatusId { get; set; }
 
-        public FamilyStatus FamilyStatus { get; set; }
+        public virtual FamilyStatus FamilyStatus { get; set; }
 
         [Required(ErrorMessage = "Field is required")]
         [Display(Name = "* Nationality")]
         public int NationalityId { get; set; }
 
-        public Nationality Nationality { get; set; }
+        public virtual Nationality Nationality { get; set; }
 
         [Required(ErrorMessage = "Field is required")]
         [Display(Name = "* Disability")]
         public int DisabilityId { get; set; }
 
-        public Disability Disability { get; set; }
+        public virtual Disability Disability { get; set; }
 
         [Required(ErrorMessage = "Field is required")]
         [Display(Name = "* Town")]
         public int TownId { get; set; }
 
-        public Town Town { get; set; }
+        public virtual Town Town { get; set; }
 
-        public List<Account> Accounts { get; set; } = new List<Account>();
+        public virtual List<Account> Accounts { get; set; } = new List<Account>();
 
-        public List<ClientDepositCredit> ClientDepositCredits { get; set; } = new List<ClientDepositCredit>();
+        public virtual List<ClientDepositCredit> ClientDepositCredits { get; set; } = new List<ClientDepositCredit>();
     }
 }

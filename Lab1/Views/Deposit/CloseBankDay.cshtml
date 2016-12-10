@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Lab1.Models.AccountOperation>
+
+@{
+    ViewBag.Title = "Close Bank Day";
+}
+
+<h2>Close Bank Day</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Account.AccountNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OperationType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OperationDate)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Account.AccountNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OperationType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OperationDate)
+        </td>
+    </tr>
+}
+
+</table>
